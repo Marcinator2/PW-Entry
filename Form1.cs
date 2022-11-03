@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using WindowsInput.Native;
@@ -51,9 +47,6 @@ namespace PW_Entry
 
             int Wartezeit = Int32.Parse(tbxWartezeit.Text);
             int Delay = Int32.Parse(tbxDelay.Text);
-
-            //string Passwort = tbxPasswd.Text;
-            //    string Passwort1 = listView1.SelectedItems+1.ToString();    
             string Passwort = lbxListe.SelectedIndex.ToString();
 
             Passwort = tbxPasswd.Text;
@@ -129,8 +122,6 @@ namespace PW_Entry
             lbxListe.Items.Clear();
             PWListe.Clear();
             IPListe.Clear();
-            //PWListe.Items.Clear();
-            //var path = @"D:\New folder\Data.csv";
             var pfad = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
             string path = pfad + @"\Data.csv";
 
@@ -210,7 +201,6 @@ namespace PW_Entry
                 {
                     if (process.MainWindowTitle.Contains(IPListe[lbxListe.SelectedIndex]))
                     {
-                        //MessageBox.Show(IPListe[lbxListe.SelectedIndex]);
                         ShowWindow(process.MainWindowHandle, 9);
                         SetForegroundWindow(process.MainWindowHandle);
                         

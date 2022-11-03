@@ -86,7 +86,7 @@
             this.tbxWartezeit.Name = "tbxWartezeit";
             this.tbxWartezeit.Size = new System.Drawing.Size(131, 22);
             this.tbxWartezeit.TabIndex = 4;
-            this.tbxWartezeit.Text = "2";
+            this.tbxWartezeit.Text = "3";
             this.tbxWartezeit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbxWartezeit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxWartezeit_KeyPress);
             // 
