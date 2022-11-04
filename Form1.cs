@@ -9,6 +9,9 @@ using WindowsInput;
 using System.Reflection;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Threading;
+using System.Globalization;
+
 
 
 
@@ -34,14 +37,32 @@ namespace PW_Entry
         List<string> IPListe = new List<string>();
         public Form1()
         {
+            
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            btnListeImportieren_Click(sender, e);
+            
+            LangInit();//Set Language
+            btnListeImportieren_Click(sender, e); //Import Data.csv
         }
+        //Set Language
+        public void LangInit()
+        {
+            
+            btnListeimportieren.Text = Properties.strings.ImpList;
+            btnFensterSuchen.Text = Properties.strings.SearchWind;
+            btnPasswort.Text = Properties.strings.ShowPW;
+            label3.Text = Properties.strings.EnterPW;
+            label2.Text = Properties.strings.WaitTime;
+            label1.Text = Properties.strings.Delay;
+            btnStart.Text = Properties.strings.Start;
+            menuLang.Text = Properties.strings.Lang;
+            menuLangGER.Text = Properties.strings.LangDE;
+            menuLangENG.Text = Properties.strings.LangEN;
 
+        }
         private void btnStart_Click(object sender, EventArgs e)
         {
 
@@ -95,6 +116,7 @@ namespace PW_Entry
 
         private void btnPasswort_MouseUp(object sender, MouseEventArgs e)
         {
+        
             tbxPasswd.UseSystemPasswordChar = true;
         }
         private void tbxDelay_KeyPress(object sender, KeyPressEventArgs e)
@@ -117,6 +139,7 @@ namespace PW_Entry
         public void btnListeImportieren_Click(object sender, EventArgs e)
 
         {
+
             try
             {
             lbxListe.Items.Clear();
@@ -143,8 +166,8 @@ namespace PW_Entry
 
                 }
             }
-            catch (Exception ex)
-            { MessageBox.Show("Data.csv ist geöffnet oder nicht vorhanden."); }
+            catch (Exception)
+            { MessageBox.Show(Properties.strings.NotFound); }
             return;
         }
 
@@ -186,7 +209,6 @@ namespace PW_Entry
             }
         }
 
-      
         private void btnFensterSuchen_Click(object sender, EventArgs e)
         {
 
@@ -207,6 +229,19 @@ namespace PW_Entry
                     }
                 }
             }
+
+        }
+
+        private void menuLangGER_Click(object sender, EventArgs e)
+        {
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
+            LangInit();
+        }
+        public void menuLangENG_Click(object sender, EventArgs e)
+        {
+            
+            Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-GB");
+            LangInit();
 
         }
 

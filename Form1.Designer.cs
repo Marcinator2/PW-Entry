@@ -2,6 +2,7 @@
 {
     partial class Form1
     {
+        
         /// <summary>
         /// Erforderliche Designervariable.
         /// </summary>
@@ -25,9 +26,11 @@
         /// <summary>
         /// Erforderliche Methode für die Designerunterstützung.
         /// Der Inhalt der Methode darf nicht mit dem Code-Editor geändert werden.
-        /// </summary>
+        
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.label1 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
             this.tbxDelay = new System.Windows.Forms.TextBox();
@@ -40,80 +43,59 @@
             this.btnListeimportieren = new System.Windows.Forms.Button();
             this.pageSetupDialog1 = new System.Windows.Forms.PageSetupDialog();
             this.btnFensterSuchen = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuLang = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuLangGER = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuLangENG = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip1.SuspendLayout();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(28, 194);
+            resources.ApplyResources(this.label1, "label1");
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(80, 16);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Delay in ms:";
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(31, 241);
+            resources.ApplyResources(this.btnStart, "btnStart");
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(153, 79);
-            this.btnStart.TabIndex = 1;
-            this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
             // 
             // tbxDelay
             // 
-            this.tbxDelay.Location = new System.Drawing.Point(31, 213);
+            resources.ApplyResources(this.tbxDelay, "tbxDelay");
             this.tbxDelay.Name = "tbxDelay";
-            this.tbxDelay.Size = new System.Drawing.Size(70, 22);
-            this.tbxDelay.TabIndex = 2;
-            this.tbxDelay.Text = "250";
-            this.tbxDelay.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbxDelay.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxDelay_KeyPress);
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(28, 150);
+            resources.ApplyResources(this.label2, "label2");
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(140, 16);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Wartezeit in Sekunden";
             // 
             // tbxWartezeit
             // 
-            this.tbxWartezeit.Location = new System.Drawing.Point(31, 169);
+            resources.ApplyResources(this.tbxWartezeit, "tbxWartezeit");
             this.tbxWartezeit.Name = "tbxWartezeit";
-            this.tbxWartezeit.Size = new System.Drawing.Size(131, 22);
-            this.tbxWartezeit.TabIndex = 4;
-            this.tbxWartezeit.Text = "3";
-            this.tbxWartezeit.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbxWartezeit.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxWartezeit_KeyPress);
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(28, 45);
+            resources.ApplyResources(this.label3, "label3");
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(125, 16);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Passwort eingeben:";
             // 
             // tbxPasswd
             // 
-            this.tbxPasswd.Location = new System.Drawing.Point(31, 64);
+            resources.ApplyResources(this.tbxPasswd, "tbxPasswd");
             this.tbxPasswd.Name = "tbxPasswd";
-            this.tbxPasswd.Size = new System.Drawing.Size(153, 22);
-            this.tbxPasswd.TabIndex = 6;
             this.tbxPasswd.UseSystemPasswordChar = true;
             // 
             // btnPasswort
             // 
-            this.btnPasswort.Location = new System.Drawing.Point(31, 103);
+            resources.ApplyResources(this.btnPasswort, "btnPasswort");
             this.btnPasswort.Name = "btnPasswort";
-            this.btnPasswort.Size = new System.Drawing.Size(153, 35);
-            this.btnPasswort.TabIndex = 7;
-            this.btnPasswort.Text = "Passwort anzeigen";
             this.btnPasswort.UseVisualStyleBackColor = true;
             this.btnPasswort.MouseDown += new System.Windows.Forms.MouseEventHandler(this.btnPasswort_MouseDown);
             this.btnPasswort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.btnPasswort_MouseUp);
@@ -121,38 +103,64 @@
             // lbxListe
             // 
             this.lbxListe.FormattingEnabled = true;
-            this.lbxListe.ItemHeight = 16;
-            this.lbxListe.Location = new System.Drawing.Point(207, 92);
+            resources.ApplyResources(this.lbxListe, "lbxListe");
             this.lbxListe.Name = "lbxListe";
-            this.lbxListe.Size = new System.Drawing.Size(162, 228);
-            this.lbxListe.TabIndex = 9;
             this.lbxListe.SelectedIndexChanged += new System.EventHandler(this.lbxListe_SelectedIndexChanged);
             // 
             // btnListeimportieren
             // 
-            this.btnListeimportieren.Location = new System.Drawing.Point(207, 57);
+            resources.ApplyResources(this.btnListeimportieren, "btnListeimportieren");
             this.btnListeimportieren.Name = "btnListeimportieren";
-            this.btnListeimportieren.Size = new System.Drawing.Size(162, 29);
-            this.btnListeimportieren.TabIndex = 10;
-            this.btnListeimportieren.Text = "Liste importieren";
             this.btnListeimportieren.UseVisualStyleBackColor = true;
             this.btnListeimportieren.Click += new System.EventHandler(this.btnListeImportieren_Click);
             // 
             // btnFensterSuchen
             // 
-            this.btnFensterSuchen.Location = new System.Drawing.Point(207, 15);
+            resources.ApplyResources(this.btnFensterSuchen, "btnFensterSuchen");
             this.btnFensterSuchen.Name = "btnFensterSuchen";
-            this.btnFensterSuchen.Size = new System.Drawing.Size(162, 32);
-            this.btnFensterSuchen.TabIndex = 11;
-            this.btnFensterSuchen.Text = "Fenster suchen";
             this.btnFensterSuchen.UseVisualStyleBackColor = true;
             this.btnFensterSuchen.Click += new System.EventHandler(this.btnFensterSuchen_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuLang});
+            resources.ApplyResources(this.menuStrip1, "menuStrip1");
+            this.menuStrip1.Name = "menuStrip1";
+            // 
+            // menuLang
+            // 
+            this.menuLang.DropDown = this.contextMenuStrip1;
+            this.menuLang.Name = "menuLang";
+            resources.ApplyResources(this.menuLang, "menuLang");
+            this.menuLang.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuLangGER,
+            this.menuLangENG});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
+            // 
+            // menuLangGER
+            // 
+            this.menuLangGER.Name = "menuLangGER";
+            resources.ApplyResources(this.menuLangGER, "menuLangGER");
+            this.menuLangGER.Click += new System.EventHandler(this.menuLangGER_Click);
+            // 
+            // menuLangENG
+            // 
+            this.menuLangENG.Name = "menuLangENG";
+            resources.ApplyResources(this.menuLangENG, "menuLangENG");
+            this.menuLangENG.Click += new System.EventHandler(this.menuLangENG_Click);
+            // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 332);
             this.Controls.Add(this.btnFensterSuchen);
             this.Controls.Add(this.btnListeimportieren);
             this.Controls.Add(this.lbxListe);
@@ -164,12 +172,16 @@
             this.Controls.Add(this.tbxDelay);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
-            this.Text = "PW-Entry";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -189,6 +201,11 @@
         private System.Windows.Forms.Button btnListeimportieren;
         private System.Windows.Forms.PageSetupDialog pageSetupDialog1;
         private System.Windows.Forms.Button btnFensterSuchen;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuLang;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuLangGER;
+        private System.Windows.Forms.ToolStripMenuItem menuLangENG;
     }
 }
 
