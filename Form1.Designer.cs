@@ -48,6 +48,8 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuLangGER = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLangENG = new System.Windows.Forms.ToolStripMenuItem();
+            this.lblSicht = new System.Windows.Forms.Label();
+            this.barSicht = new ProgressBarSample.TextProgressBar();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -143,6 +145,7 @@
             this.menuLangGER,
             this.menuLangENG});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.OwnerItem = this.menuLang;
             resources.ApplyResources(this.contextMenuStrip1, "contextMenuStrip1");
             // 
             // menuLangGER
@@ -157,10 +160,29 @@
             resources.ApplyResources(this.menuLangENG, "menuLangENG");
             this.menuLangENG.Click += new System.EventHandler(this.menuLangENG_Click);
             // 
+            // lblSicht
+            // 
+            resources.ApplyResources(this.lblSicht, "lblSicht");
+            this.lblSicht.Name = "lblSicht";
+            // 
+            // barSicht
+            // 
+            this.barSicht.CustomText = "";
+            resources.ApplyResources(this.barSicht, "barSicht");
+            this.barSicht.Name = "barSicht";
+            this.barSicht.ProgressColor = System.Drawing.Color.Lime;
+            this.barSicht.TextColor = System.Drawing.Color.Black;
+            this.barSicht.TextFont = new System.Drawing.Font("Times New Roman", 11F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
+            this.barSicht.Value = 90;
+            this.barSicht.VisualMode = ProgressBarSample.ProgressBarDisplayMode.NoText;
+            this.barSicht.Click += new System.EventHandler(this.barSicht_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblSicht);
+            this.Controls.Add(this.barSicht);
             this.Controls.Add(this.btnFensterSuchen);
             this.Controls.Add(this.btnListeimportieren);
             this.Controls.Add(this.lbxListe);
@@ -178,7 +200,12 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
+            this.Opacity = 0.69D;
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseEnter += new System.EventHandler(this.Form1_MouseEnter);
+            this.MouseLeave += new System.EventHandler(this.Form1_MouseLeave);
+            this.MouseHover += new System.EventHandler(this.Form1_MouseHover);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -206,6 +233,8 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem menuLangGER;
         private System.Windows.Forms.ToolStripMenuItem menuLangENG;
+        private ProgressBarSample.TextProgressBar barSicht;
+        private System.Windows.Forms.Label lblSicht;
     }
 }
 

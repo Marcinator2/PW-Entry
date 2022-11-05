@@ -115,6 +115,15 @@ namespace PW_Entry.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Change opasity: ähnelt.
+        /// </summary>
+        internal static string LblOpacity {
+            get {
+                return ResourceManager.GetString("LblOpacity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Data.csv is missing or opened. ähnelt.
         /// </summary>
         internal static string NotFound {

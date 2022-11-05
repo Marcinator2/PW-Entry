@@ -11,9 +11,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Globalization;
-
-
-
+using ProgressBarSample;
+using System.Runtime.CompilerServices;
 
 namespace PW_Entry
 {
@@ -37,20 +36,25 @@ namespace PW_Entry
         List<string> IPListe = new List<string>();
         public Form1()
         {
-            
+
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             LangInit();//Set Language
             btnListeImportieren_Click(sender, e); //Import Data.csv
+            Sichtbarkeit = barSicht.Value / 100;
+
         }
+        public double Sichtbarkeit;
+
+       
         //Set Language
         public void LangInit()
         {
-            
+
             btnListeimportieren.Text = Properties.strings.ImpList;
             btnFensterSuchen.Text = Properties.strings.SearchWind;
             btnPasswort.Text = Properties.strings.ShowPW;
@@ -116,7 +120,7 @@ namespace PW_Entry
 
         private void btnPasswort_MouseUp(object sender, MouseEventArgs e)
         {
-        
+
             tbxPasswd.UseSystemPasswordChar = true;
         }
         private void tbxDelay_KeyPress(object sender, KeyPressEventArgs e)
@@ -142,11 +146,11 @@ namespace PW_Entry
 
             try
             {
-            lbxListe.Items.Clear();
-            PWListe.Clear();
-            IPListe.Clear();
-            var pfad = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string path = pfad + @"\Data.csv";
+                lbxListe.Items.Clear();
+                PWListe.Clear();
+                IPListe.Clear();
+                var pfad = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                string path = pfad + @"\Data.csv";
 
                 List<example> values = File.ReadAllLines(path)
 
@@ -214,7 +218,7 @@ namespace PW_Entry
 
             Process[] processlist = Process.GetProcesses();
 
-            
+
 
             foreach (Process process in processlist)
             {
@@ -225,7 +229,7 @@ namespace PW_Entry
                     {
                         ShowWindow(process.MainWindowHandle, 9);
                         SetForegroundWindow(process.MainWindowHandle);
-                        
+
                     }
                 }
             }
@@ -239,12 +243,63 @@ namespace PW_Entry
         }
         public void menuLangENG_Click(object sender, EventArgs e)
         {
-            
+
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-GB");
             LangInit();
 
         }
+        
+        
+      
+        
 
+        private void barSicht_Click(object sender, EventArgs e)
+        {
+            // Get mouse position(x) minus the width of the progressbar (so beginning of the progressbar is mousepos = 0 //
+            float absoluteMouse = (PointToClient(MousePosition).X - barSicht.Bounds.X);
+            // Calculate the factor for converting the position (progbarWidth/100) //
+            float calcFactor = barSicht.Width / (float)barSicht.Maximum;
+            // In the end convert the absolute mouse value to a relative mouse value by dividing the absolute mouse by the calcfactor //
+            float relativeMouse = absoluteMouse / calcFactor;
+            // Set the calculated relative value to the progressbar //
+
+
+            this.barSicht.Value = Convert.ToInt32(relativeMouse);
+
+            Sichtbarkeit = Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit = Sichtbarkeit / 100;
+
+            //barSicht.Value = barSicht.Value;
+            //this.Opacity = barSicht.Value / 100;
+           this.Opacity = Sichtbarkeit;
+           //return Convert.toSichtbarkeit;
+            //MessageBox.Show(Convert.ToString(barSicht.Value));
+            // MessageBox.Show(Sichtbarkeit.ToString());
+
+        }
+
+
+   
+
+        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        {
+            
+        }
+
+        private void Form1_MouseLeave(object sender, EventArgs e)
+        {
+            this.Opacity = 0.1;
+        }
+
+        private void Form1_MouseEnter(object sender, EventArgs e)
+        {
+            this.Opacity = 0.99;
+        }
+
+        private void Form1_MouseHover(object sender, EventArgs e)
+        {
+ this.Opacity = 0.99;
+        }
     }
 
 

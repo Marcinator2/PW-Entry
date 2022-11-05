@@ -135,6 +135,9 @@
   <data name="LangEN" xml:space="preserve">
     <value>Englisch</value>
   </data>
+  <data name="LblOpacity" xml:space="preserve">
+    <value>Sichtbarkeit ändern:</value>
+  </data>
   <data name="NotFound" xml:space="preserve">
     <value>Data.csv fehlt oder ist geöffnet. </value>
   </data>
