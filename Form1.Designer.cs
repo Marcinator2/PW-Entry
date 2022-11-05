@@ -50,6 +50,7 @@
             this.menuLangENG = new System.Windows.Forms.ToolStripMenuItem();
             this.lblSicht = new System.Windows.Forms.Label();
             this.barSicht = new ProgressBarSample.TextProgressBar();
+            this.btnSave = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -178,10 +179,18 @@
             this.barSicht.VisualMode = ProgressBarSample.ProgressBarDisplayMode.NoText;
             this.barSicht.Click += new System.EventHandler(this.barSicht_Click);
             // 
+            // btnSave
+            // 
+            resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.Name = "btnSave";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnSave);
             this.Controls.Add(this.lblSicht);
             this.Controls.Add(this.barSicht);
             this.Controls.Add(this.btnFensterSuchen);
@@ -232,6 +241,7 @@
         private System.Windows.Forms.ToolStripMenuItem menuLangENG;
         private ProgressBarSample.TextProgressBar barSicht;
         private System.Windows.Forms.Label lblSicht;
+        private System.Windows.Forms.Button btnSave;
     }
 }
 
