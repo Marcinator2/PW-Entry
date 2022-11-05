@@ -61,6 +61,15 @@ namespace PW_Entry.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Change Visibility: ähnelt.
+        /// </summary>
+        internal static string ChangeVisibility {
+            get {
+                return ResourceManager.GetString("ChangeVisibility", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Delay in ms: ähnelt.
         /// </summary>
         internal static string Delay {

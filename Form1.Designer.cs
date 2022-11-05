@@ -171,6 +171,7 @@
             resources.ApplyResources(this.barSicht, "barSicht");
             this.barSicht.Name = "barSicht";
             this.barSicht.ProgressColor = System.Drawing.Color.Lime;
+            this.barSicht.Step = 1;
             this.barSicht.TextColor = System.Drawing.Color.Black;
             this.barSicht.TextFont = new System.Drawing.Font("Times New Roman", 11F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
             this.barSicht.Value = 90;
@@ -202,10 +203,6 @@
             this.Name = "Form1";
             this.Opacity = 0.69D;
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.MouseEnter += new System.EventHandler(this.Form1_MouseEnter);
-            this.MouseLeave += new System.EventHandler(this.Form1_MouseLeave);
-            this.MouseHover += new System.EventHandler(this.Form1_MouseHover);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.contextMenuStrip1.ResumeLayout(false);

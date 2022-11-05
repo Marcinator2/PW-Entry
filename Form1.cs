@@ -13,6 +13,9 @@ using System.Threading;
 using System.Globalization;
 using ProgressBarSample;
 using System.Runtime.CompilerServices;
+using System.Drawing;
+using System.Windows; 
+
 
 namespace PW_Entry
 {
@@ -32,6 +35,7 @@ namespace PW_Entry
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd1, int nCmdShow);
 
+
         List<string> PWListe = new List<string>();
         List<string> IPListe = new List<string>();
         public Form1()
@@ -45,12 +49,14 @@ namespace PW_Entry
 
             LangInit();//Set Language
             btnListeImportieren_Click(sender, e); //Import Data.csv
-            Sichtbarkeit = barSicht.Value / 100;
+            Sichtbarkeit = Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit /= 100;
+            this.Opacity = Sichtbarkeit;
 
         }
         public double Sichtbarkeit;
 
-       
+
         //Set Language
         public void LangInit()
         {
@@ -65,6 +71,7 @@ namespace PW_Entry
             menuLang.Text = Properties.strings.Lang;
             menuLangGER.Text = Properties.strings.LangDE;
             menuLangENG.Text = Properties.strings.LangEN;
+            lblSicht.Text = Properties.strings.ChangeVisibility;
 
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -78,7 +85,7 @@ namespace PW_Entry
             Wartezeit = Wartezeit * 1000;
 
             simulateTypingText(Passwort, Delay, Wartezeit);
-            //btnStart.BackColor = Color.Orange;
+           
 
         }
 
@@ -86,7 +93,7 @@ namespace PW_Entry
 
         public void simulateTypingText(string Text, int typingDelay = 100, int startDelay = 0)
         {
-            //btnStart.BackColor = Color.Orange;
+        
             InputSimulator sim = new InputSimulator();
 
             // Wait the start delay time
@@ -155,19 +162,14 @@ namespace PW_Entry
                 List<example> values = File.ReadAllLines(path)
 
                                               .Skip(1)
-
                                               .Select(v => example.FromCsv(v))
-
                                               .ToList();
 
                 foreach (var item in values)
-
                 {
-
                     lbxListe.Items.Add(item.t1);
                     PWListe.Add(item.t2);
                     IPListe.Add(item.t3);
-
                 }
             }
             catch (Exception)
@@ -178,17 +180,12 @@ namespace PW_Entry
         public class example
 
         {
-
             public string t1;
-
             public string t2;
-
             public string t3;
-
             public static example FromCsv(string csvLine)
 
             {
-
                 string[] values = csvLine.Split(';');
 
                 example dailyValues = new example();
@@ -197,11 +194,8 @@ namespace PW_Entry
                 dailyValues.t2 = values[1];
                 dailyValues.t3 = values[2];
 
-
                 return dailyValues;
-
             }
-
         }
 
         private void lbxListe_SelectedIndexChanged(object sender, EventArgs e)
@@ -209,7 +203,6 @@ namespace PW_Entry
             if (lbxListe.SelectedIndex >= 0)
             {
                 tbxPasswd.Text = PWListe[lbxListe.SelectedIndex];
-
             }
         }
 
@@ -248,10 +241,10 @@ namespace PW_Entry
             LangInit();
 
         }
-        
-        
-      
-        
+
+
+
+
 
         private void barSicht_Click(object sender, EventArgs e)
         {
@@ -268,40 +261,66 @@ namespace PW_Entry
 
             Sichtbarkeit = Convert.ToDouble(barSicht.Value);
             Sichtbarkeit = Sichtbarkeit / 100;
-
-            //barSicht.Value = barSicht.Value;
-            //this.Opacity = barSicht.Value / 100;
-           this.Opacity = Sichtbarkeit;
-           //return Convert.toSichtbarkeit;
-            //MessageBox.Show(Convert.ToString(barSicht.Value));
-            // MessageBox.Show(Sichtbarkeit.ToString());
-
-        }
+            this.Opacity = Sichtbarkeit;
+         }
 
 
-   
-
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
+        protected override void WndProc(ref Message m)
         {
-            
+            if (m.Msg == 0xA0) // WM_NCMOUSEMOVE
+            {
+                TrackNcMouseLeave(this);
+                ShowClientArea();
+            }
+            else if (m.Msg == 0x2A2) // WM_NCMOUSELEAVE
+            {
+                HideClientAreaIfPointerIsOut();
+            }
+
+            base.WndProc(ref m);
         }
 
-        private void Form1_MouseLeave(object sender, EventArgs e)
+        protected override void OnMouseLeave(EventArgs e)
         {
-            this.Opacity = 0.1;
+            base.OnMouseLeave(e);
+            HideClientAreaIfPointerIsOut();
         }
 
-        private void Form1_MouseEnter(object sender, EventArgs e)
+        private void ShowClientArea()
         {
-            this.Opacity = 0.99;
+                this.Opacity = 1;
         }
 
-        private void Form1_MouseHover(object sender, EventArgs e)
+        private void HideClientAreaIfPointerIsOut()
         {
- this.Opacity = 0.99;
+            if (this.Bounds.Contains(Cursor.Position))
+                return;
+
+            Sichtbarkeit= Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit/=100;
+            this.Opacity = Sichtbarkeit;
+         }
+
+        public static void TrackNcMouseLeave(Control control)
+        {
+            TRACKMOUSEEVENT tme = new TRACKMOUSEEVENT();
+            tme.cbSize = (uint)Marshal.SizeOf(tme);
+            tme.dwFlags = 2 | 0x10; // TME_LEAVE | TME_NONCLIENT
+            tme.hwndTrack = control.Handle;
+            TrackMouseEvent(tme);
         }
+
+        [DllImport("user32")]
+        public static extern bool TrackMouseEvent([In, Out] TRACKMOUSEEVENT lpEventTrack);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class TRACKMOUSEEVENT
+        {
+            public uint cbSize;
+            public uint dwFlags;
+            public IntPtr hwndTrack;
+            public uint dwHoverTime;
+        }
+
     }
-
-
 }
-
