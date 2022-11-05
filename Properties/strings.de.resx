@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ChangeVisibility" xml:space="preserve">
+    <value>Sichbarkeit ändern:</value>
+  </data>
   <data name="Delay" xml:space="preserve">
     <value>Delay in ms:</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="LangEN" xml:space="preserve">
     <value>Englisch</value>
+  </data>
+  <data name="LblOpacity" xml:space="preserve">
+    <value>Sichtbarkeit ändern:</value>
   </data>
   <data name="NotFound" xml:space="preserve">
     <value>Data.csv fehlt oder ist geöffnet. </value>

@@ -11,8 +11,10 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Globalization;
-
-
+using ProgressBarSample;
+using System.Runtime.CompilerServices;
+using System.Drawing;
+using System.Windows; 
 
 
 namespace PW_Entry
@@ -33,24 +35,32 @@ namespace PW_Entry
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd1, int nCmdShow);
 
+
         List<string> PWListe = new List<string>();
         List<string> IPListe = new List<string>();
         public Form1()
         {
-            
+
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+
             LangInit();//Set Language
             btnListeImportieren_Click(sender, e); //Import Data.csv
+            Sichtbarkeit = Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit /= 100;
+            this.Opacity = Sichtbarkeit;
+
         }
+        public double Sichtbarkeit;
+
+
         //Set Language
         public void LangInit()
         {
-            
+
             btnListeimportieren.Text = Properties.strings.ImpList;
             btnFensterSuchen.Text = Properties.strings.SearchWind;
             btnPasswort.Text = Properties.strings.ShowPW;
@@ -61,6 +71,7 @@ namespace PW_Entry
             menuLang.Text = Properties.strings.Lang;
             menuLangGER.Text = Properties.strings.LangDE;
             menuLangENG.Text = Properties.strings.LangEN;
+            lblSicht.Text = Properties.strings.ChangeVisibility;
 
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -74,7 +85,7 @@ namespace PW_Entry
             Wartezeit = Wartezeit * 1000;
 
             simulateTypingText(Passwort, Delay, Wartezeit);
-            //btnStart.BackColor = Color.Orange;
+           
 
         }
 
@@ -82,7 +93,7 @@ namespace PW_Entry
 
         public void simulateTypingText(string Text, int typingDelay = 100, int startDelay = 0)
         {
-            //btnStart.BackColor = Color.Orange;
+        
             InputSimulator sim = new InputSimulator();
 
             // Wait the start delay time
@@ -116,7 +127,7 @@ namespace PW_Entry
 
         private void btnPasswort_MouseUp(object sender, MouseEventArgs e)
         {
-        
+
             tbxPasswd.UseSystemPasswordChar = true;
         }
         private void tbxDelay_KeyPress(object sender, KeyPressEventArgs e)
@@ -142,28 +153,23 @@ namespace PW_Entry
 
             try
             {
-            lbxListe.Items.Clear();
-            PWListe.Clear();
-            IPListe.Clear();
-            var pfad = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
-            string path = pfad + @"\Data.csv";
+                lbxListe.Items.Clear();
+                PWListe.Clear();
+                IPListe.Clear();
+                var pfad = System.IO.Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+                string path = pfad + @"\Data.csv";
 
                 List<example> values = File.ReadAllLines(path)
 
                                               .Skip(1)
-
                                               .Select(v => example.FromCsv(v))
-
                                               .ToList();
 
                 foreach (var item in values)
-
                 {
-
                     lbxListe.Items.Add(item.t1);
                     PWListe.Add(item.t2);
                     IPListe.Add(item.t3);
-
                 }
             }
             catch (Exception)
@@ -174,17 +180,12 @@ namespace PW_Entry
         public class example
 
         {
-
             public string t1;
-
             public string t2;
-
             public string t3;
-
             public static example FromCsv(string csvLine)
 
             {
-
                 string[] values = csvLine.Split(';');
 
                 example dailyValues = new example();
@@ -193,11 +194,8 @@ namespace PW_Entry
                 dailyValues.t2 = values[1];
                 dailyValues.t3 = values[2];
 
-
                 return dailyValues;
-
             }
-
         }
 
         private void lbxListe_SelectedIndexChanged(object sender, EventArgs e)
@@ -205,7 +203,6 @@ namespace PW_Entry
             if (lbxListe.SelectedIndex >= 0)
             {
                 tbxPasswd.Text = PWListe[lbxListe.SelectedIndex];
-
             }
         }
 
@@ -214,7 +211,7 @@ namespace PW_Entry
 
             Process[] processlist = Process.GetProcesses();
 
-            
+
 
             foreach (Process process in processlist)
             {
@@ -225,7 +222,7 @@ namespace PW_Entry
                     {
                         ShowWindow(process.MainWindowHandle, 9);
                         SetForegroundWindow(process.MainWindowHandle);
-                        
+
                     }
                 }
             }
@@ -239,14 +236,91 @@ namespace PW_Entry
         }
         public void menuLangENG_Click(object sender, EventArgs e)
         {
-            
+
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-GB");
             LangInit();
 
         }
 
+
+
+
+
+        private void barSicht_Click(object sender, EventArgs e)
+        {
+            // Get mouse position(x) minus the width of the progressbar (so beginning of the progressbar is mousepos = 0 //
+            float absoluteMouse = (PointToClient(MousePosition).X - barSicht.Bounds.X);
+            // Calculate the factor for converting the position (progbarWidth/100) //
+            float calcFactor = barSicht.Width / (float)barSicht.Maximum;
+            // In the end convert the absolute mouse value to a relative mouse value by dividing the absolute mouse by the calcfactor //
+            float relativeMouse = absoluteMouse / calcFactor;
+            // Set the calculated relative value to the progressbar //
+
+
+            this.barSicht.Value = Convert.ToInt32(relativeMouse);
+
+            Sichtbarkeit = Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit = Sichtbarkeit / 100;
+            this.Opacity = Sichtbarkeit;
+         }
+
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0xA0) // WM_NCMOUSEMOVE
+            {
+                TrackNcMouseLeave(this);
+                ShowClientArea();
+            }
+            else if (m.Msg == 0x2A2) // WM_NCMOUSELEAVE
+            {
+                HideClientAreaIfPointerIsOut();
+            }
+
+            base.WndProc(ref m);
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            HideClientAreaIfPointerIsOut();
+        }
+
+        private void ShowClientArea()
+        {
+                this.Opacity = 1;
+        }
+
+        private void HideClientAreaIfPointerIsOut()
+        {
+            if (this.Bounds.Contains(Cursor.Position))
+                return;
+
+            Sichtbarkeit= Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit/=100;
+            this.Opacity = Sichtbarkeit;
+         }
+
+        public static void TrackNcMouseLeave(Control control)
+        {
+            TRACKMOUSEEVENT tme = new TRACKMOUSEEVENT();
+            tme.cbSize = (uint)Marshal.SizeOf(tme);
+            tme.dwFlags = 2 | 0x10; // TME_LEAVE | TME_NONCLIENT
+            tme.hwndTrack = control.Handle;
+            TrackMouseEvent(tme);
+        }
+
+        [DllImport("user32")]
+        public static extern bool TrackMouseEvent([In, Out] TRACKMOUSEEVENT lpEventTrack);
+
+        [StructLayout(LayoutKind.Sequential)]
+        public class TRACKMOUSEEVENT
+        {
+            public uint cbSize;
+            public uint dwFlags;
+            public IntPtr hwndTrack;
+            public uint dwHoverTime;
+        }
+
     }
-
-
 }
-
