@@ -144,6 +144,9 @@
   <data name="NotFound" xml:space="preserve">
     <value>Data.csv is missing or opened.</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save Settings</value>
+  </data>
   <data name="SearchWind" xml:space="preserve">
     <value>Search window</value>
   </data>

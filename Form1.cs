@@ -49,13 +49,28 @@ namespace PW_Entry
 
             LangInit();//Set Language
             btnListeImportieren_Click(sender, e); //Import Data.csv
+            barSicht.Value = Properties.Settings.Default.Opacity;
             Sichtbarkeit = Convert.ToDouble(barSicht.Value);
             Sichtbarkeit /= 100;
+            GetSettings();  
             this.Opacity = Sichtbarkeit;
-
         }
         public double Sichtbarkeit;
 
+        public void GetSettings()
+        {
+            tbxDelay.Text = Properties.Settings.Default.Delay.ToString();
+            tbxWartezeit.Text = Properties.Settings.Default.WaitTime.ToString();
+            barSicht.Value = Properties.Settings.Default.Opacity;
+        }
+        public void SaveSettigs()
+        {
+            Properties.Settings.Default.Delay = Convert.ToInt32(tbxDelay.Text);
+            Properties.Settings.Default.WaitTime = Convert.ToInt32(tbxWartezeit.Text);
+            Properties.Settings.Default.Opacity = barSicht.Value;
+            Properties.Settings.Default.Save();
+
+        }
 
         //Set Language
         public void LangInit()
@@ -72,6 +87,7 @@ namespace PW_Entry
             menuLangGER.Text = Properties.strings.LangDE;
             menuLangENG.Text = Properties.strings.LangEN;
             lblSicht.Text = Properties.strings.ChangeVisibility;
+            btnSave.Text = Properties.strings.Save;
 
         }
         private void btnStart_Click(object sender, EventArgs e)
@@ -322,5 +338,10 @@ namespace PW_Entry
             public uint dwHoverTime;
         }
 
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            SaveSettigs();  
+
+        }
     }
 }

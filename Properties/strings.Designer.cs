@@ -142,6 +142,15 @@ namespace PW_Entry.Properties {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die Save Settings ähnelt.
+        /// </summary>
+        internal static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die Search window ähnelt.
         /// </summary>
         internal static string SearchWind {
