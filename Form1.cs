@@ -14,8 +14,7 @@ using System.Globalization;
 using ProgressBarSample;
 using System.Runtime.CompilerServices;
 using System.Drawing;
-using System.Windows; 
-
+using System.Windows;
 
 namespace PW_Entry
 {
@@ -23,11 +22,11 @@ namespace PW_Entry
     {
         internal const int ActiveResize = 3;
 
-        //Import the FindWindow API to find our window
+        // Import the FindWindow API to find our window
         [DllImportAttribute("User32.dll")]
         private static extern int FindWindow(String ClassName, String WindowName);
 
-        //Import the SetForeground API to activate it
+        // Import the SetForeground API to activate it
         [DllImportAttribute("User32.dll")]
         private static extern IntPtr SetForegroundWindow(IntPtr hWnd);
 
@@ -35,26 +34,25 @@ namespace PW_Entry
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool ShowWindow(IntPtr hWnd1, int nCmdShow);
 
-
         List<string> PWListe = new List<string>();
         List<string> IPListe = new List<string>();
+
         public Form1()
         {
-
             InitializeComponent();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
-            LangInit();//Set Language
-            btnListeImportieren_Click(sender, e); //Import Data.csv
+            LangInit(); // Set Language
+            btnListeImportieren_Click(sender, e); // Import Data.csv
             barSicht.Value = Properties.Settings.Default.Opacity;
             Sichtbarkeit = Convert.ToDouble(barSicht.Value);
             Sichtbarkeit /= 100;
-            GetSettings();  
+            GetSettings();
             this.Opacity = Sichtbarkeit;
         }
+
         public double Sichtbarkeit;
 
         public void GetSettings()
@@ -63,19 +61,18 @@ namespace PW_Entry
             tbxWartezeit.Text = Properties.Settings.Default.WaitTime.ToString();
             barSicht.Value = Properties.Settings.Default.Opacity;
         }
+
         public void SaveSettigs()
         {
             Properties.Settings.Default.Delay = Convert.ToInt32(tbxDelay.Text);
             Properties.Settings.Default.WaitTime = Convert.ToInt32(tbxWartezeit.Text);
             Properties.Settings.Default.Opacity = barSicht.Value;
             Properties.Settings.Default.Save();
-
         }
 
-        //Set Language
+        // Set Language
         public void LangInit()
         {
-
             btnListeimportieren.Text = Properties.strings.ImpList;
             btnFensterSuchen.Text = Properties.strings.SearchWind;
             btnPasswort.Text = Properties.strings.ShowPW;
@@ -88,52 +85,34 @@ namespace PW_Entry
             menuLangENG.Text = Properties.strings.LangEN;
             lblSicht.Text = Properties.strings.ChangeVisibility;
             btnSave.Text = Properties.strings.Save;
-
         }
+
         private void btnStart_Click(object sender, EventArgs e)
         {
-
             int Wartezeit = Int32.Parse(tbxWartezeit.Text);
             int Delay = Int32.Parse(tbxDelay.Text);
-            string Passwort = lbxListe.SelectedIndex.ToString();
+            string Passwort = tbxPasswd.Text;
 
-            Passwort = tbxPasswd.Text;
             Wartezeit = Wartezeit * 1000;
-
-            simulateTypingText(Passwort, Delay, Wartezeit);
-           
-
+            SimulateTypingText(Passwort, Delay, Wartezeit);
         }
 
-
-
-        public void simulateTypingText(string Text, int typingDelay = 100, int startDelay = 0)
+        public void SimulateTypingText(string text, int typingDelay = 100, int startDelay = 0)
         {
-        
             InputSimulator sim = new InputSimulator();
 
-            // Wait the start delay time
+            // Wartezeit vor dem Start der Eingabe
             sim.Keyboard.Sleep(startDelay);
 
-            // Split the text in lines in case it has
-            string[] lines = Text.Split(new string[] { "\r\n", "\n" }, StringSplitOptions.None);
-
-            foreach (string line in lines)
+            // Text in Zeichen zerlegen und simulieren
+            foreach (char c in text)
             {
-                // Split line into characters
-                char[] words = line.ToCharArray();
-
-                // Simulate typing of the char i.e: a, e , i ,o ,u etc
-                // Apply immediately the typing delay
-                foreach (char word in words)
-                {
-                    sim.Keyboard.TextEntry(word).Sleep(typingDelay);
-                }
-
-                //Enter nach PW drücken
-                sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
-
+                sim.Keyboard.TextEntry(c);
+                Thread.Sleep(typingDelay);
             }
+
+            // Enter-Taste drücken
+            sim.Keyboard.KeyPress(VirtualKeyCode.RETURN);
         }
 
         private void btnPasswort_MouseDown(object sender, MouseEventArgs e)
@@ -143,30 +122,27 @@ namespace PW_Entry
 
         private void btnPasswort_MouseUp(object sender, MouseEventArgs e)
         {
-
             tbxPasswd.UseSystemPasswordChar = true;
         }
+
         private void tbxDelay_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
-
             }
         }
+
         private void tbxWartezeit_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
             {
                 e.Handled = true;
-
             }
         }
 
         public void btnListeImportieren_Click(object sender, EventArgs e)
-
         {
-
             try
             {
                 lbxListe.Items.Clear();
@@ -176,10 +152,9 @@ namespace PW_Entry
                 string path = pfad + @"\Data.csv";
 
                 List<example> values = File.ReadAllLines(path)
-
-                                              .Skip(1)
-                                              .Select(v => example.FromCsv(v))
-                                              .ToList();
+                                            .Skip(1)
+                                            .Select(v => example.FromCsv(v))
+                                            .ToList();
 
                 foreach (var item in values)
                 {
@@ -189,27 +164,26 @@ namespace PW_Entry
                 }
             }
             catch (Exception)
-            { MessageBox.Show(Properties.strings.NotFound); }
-            return;
+            {
+                MessageBox.Show(Properties.strings.NotFound);
+            }
         }
 
         public class example
-
         {
             public string t1;
             public string t2;
             public string t3;
+
             public static example FromCsv(string csvLine)
-
             {
-                string[] values = csvLine.Split(';');
-
-                example dailyValues = new example();
-
-                dailyValues.t1 = values[0];
-                dailyValues.t2 = values[1];
-                dailyValues.t3 = values[2];
-
+                string[] values = csvLine.Split('|'); // Tabulator als Trennzeichen
+                example dailyValues = new example
+                {
+                    t1 = values[0],
+                    t2 = values[1],
+                    t3 = values[2]
+                };
                 return dailyValues;
             }
         }
@@ -224,25 +198,19 @@ namespace PW_Entry
 
         private void btnFensterSuchen_Click(object sender, EventArgs e)
         {
-
             Process[] processlist = Process.GetProcesses();
-
-
 
             foreach (Process process in processlist)
             {
-
                 if (!String.IsNullOrEmpty(process.MainWindowTitle) && lbxListe.SelectedIndex >= 0 && Convert.ToString(IPListe[lbxListe.SelectedIndex]) != "")
                 {
                     if (process.MainWindowTitle.Contains(IPListe[lbxListe.SelectedIndex]))
                     {
                         ShowWindow(process.MainWindowHandle, 9);
                         SetForegroundWindow(process.MainWindowHandle);
-
                     }
                 }
             }
-
         }
 
         private void menuLangGER_Click(object sender, EventArgs e)
@@ -250,17 +218,12 @@ namespace PW_Entry
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("de-DE");
             LangInit();
         }
-        public void menuLangENG_Click(object sender, EventArgs e)
-        {
 
+        private void menuLangENG_Click(object sender, EventArgs e)
+        {
             Thread.CurrentThread.CurrentUICulture = CultureInfo.GetCultureInfo("en-GB");
             LangInit();
-
         }
-
-
-
-
 
         private void barSicht_Click(object sender, EventArgs e)
         {
@@ -272,14 +235,12 @@ namespace PW_Entry
             float relativeMouse = absoluteMouse / calcFactor;
             // Set the calculated relative value to the progressbar //
 
-
             this.barSicht.Value = Convert.ToInt32(relativeMouse);
 
             Sichtbarkeit = Convert.ToDouble(barSicht.Value);
             Sichtbarkeit = Sichtbarkeit / 100;
             this.Opacity = Sichtbarkeit;
-         }
-
+        }
 
         protected override void WndProc(ref Message m)
         {
@@ -304,7 +265,7 @@ namespace PW_Entry
 
         private void ShowClientArea()
         {
-                this.Opacity = 1;
+            this.Opacity = 1;
         }
 
         private void HideClientAreaIfPointerIsOut()
@@ -312,17 +273,19 @@ namespace PW_Entry
             if (this.Bounds.Contains(Cursor.Position))
                 return;
 
-            Sichtbarkeit= Convert.ToDouble(barSicht.Value);
-            Sichtbarkeit/=100;
+            Sichtbarkeit = Convert.ToDouble(barSicht.Value);
+            Sichtbarkeit /= 100;
             this.Opacity = Sichtbarkeit;
-         }
+        }
 
         public static void TrackNcMouseLeave(Control control)
         {
-            TRACKMOUSEEVENT tme = new TRACKMOUSEEVENT();
-            tme.cbSize = (uint)Marshal.SizeOf(tme);
-            tme.dwFlags = 2 | 0x10; // TME_LEAVE | TME_NONCLIENT
-            tme.hwndTrack = control.Handle;
+            TRACKMOUSEEVENT tme = new TRACKMOUSEEVENT
+            {
+                cbSize = (uint)Marshal.SizeOf(typeof(TRACKMOUSEEVENT)),
+                dwFlags = 2 | 0x10, // TME_LEAVE | TME_NONCLIENT
+                hwndTrack = control.Handle
+            };
             TrackMouseEvent(tme);
         }
 
@@ -340,8 +303,7 @@ namespace PW_Entry
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            SaveSettigs();  
-
+            SaveSettigs();
         }
     }
 }
