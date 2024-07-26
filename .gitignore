@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore everything in the bin directory
+/bin/*
+
+# Except the Debug directory
+!/bin/Debug/
+!/bin/Debug/**
+
+# Ignore everything in the obj folder
+/obj/*
