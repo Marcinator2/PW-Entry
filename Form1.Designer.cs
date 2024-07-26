@@ -49,8 +49,8 @@
             this.menuLangGER = new System.Windows.Forms.ToolStripMenuItem();
             this.menuLangENG = new System.Windows.Forms.ToolStripMenuItem();
             this.lblSicht = new System.Windows.Forms.Label();
-            this.barSicht = new ProgressBarSample.TextProgressBar();
             this.btnSave = new System.Windows.Forms.Button();
+            this.barSicht = new ProgressBarSample.TextProgressBar();
             this.menuStrip1.SuspendLayout();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -166,6 +166,13 @@
             resources.ApplyResources(this.lblSicht, "lblSicht");
             this.lblSicht.Name = "lblSicht";
             // 
+            // btnSave
+            // 
+            resources.ApplyResources(this.btnSave, "btnSave");
+            this.btnSave.Name = "btnSave";
+            this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
+            // 
             // barSicht
             // 
             this.barSicht.CustomText = "";
@@ -178,13 +185,6 @@
             this.barSicht.Value = 90;
             this.barSicht.VisualMode = ProgressBarSample.ProgressBarDisplayMode.NoText;
             this.barSicht.Click += new System.EventHandler(this.barSicht_Click);
-            // 
-            // btnSave
-            // 
-            resources.ApplyResources(this.btnSave, "btnSave");
-            this.btnSave.Name = "btnSave";
-            this.btnSave.UseVisualStyleBackColor = true;
-            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // Form1
             // 
@@ -208,7 +208,6 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.MinimizeBox = false;
             this.Name = "Form1";
             this.Opacity = 0.69D;
             this.Load += new System.EventHandler(this.Form1_Load);
